@@ -1,6 +1,6 @@
 ---
 layout: page
-title: About Pixyll
+title: About Zhiyuan MA
 permalink: /about/
 tags: about
 ---
