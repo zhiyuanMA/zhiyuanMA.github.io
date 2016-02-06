@@ -4,7 +4,7 @@ email:       zhiyuan.ma.nz@gmail.com
 author:      Zhiyuan MA
 description: "A simple, beautiful theme for Jekyll that emphasizes content rather than aesthetic fluff."
 baseurl:     ""
-url:         "http://pixyll.com"
+url:         "http://zhiyuanma.github.io"
 date_format: "%b %-d, %Y"
 
 # Google services
