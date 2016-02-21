@@ -11,6 +11,7 @@ I'm a Java Developer, experienced in <b>Web applications and Big Data Projects</
 I’m passionate about building high quality applications and user interfaces with modern web technologies, test driven development and agile methodology.
 
 
+## My Skills
 ### Java
 
 * Java SE
