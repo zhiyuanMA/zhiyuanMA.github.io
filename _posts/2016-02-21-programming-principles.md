@@ -3,7 +3,7 @@ layout:     post
 title:      Programming Principles
 categories: pattern
 ---
-<small>fork from [WebPro](webpro.github.io/programming-principles/web)</small>
+<small>Fork from [WebPro](webpro.github.io/programming-principles/web)</small>
 
 Every programmer benefits from understanding programming principles and patterns. This overview is a reference for myself, and I've just put it here. Maybe it is of help to you during design, discussion, or review. Please note that it's far from complete, and that you often need to make trade-offs between conflicting principles.
 
