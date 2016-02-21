@@ -6,13 +6,14 @@ tags: about
 ---
 
 
-I'm a Java Developer, experienced in Web applications and Big Data Projects. Past 6 years I collaborated with amazing people in Beijing and Auckland to create beautiful codes and robust solutions.
+<b>I'm a Java Developer, experienced in Web applications and Big Data Projects. Past 6 years I collaborated with amazing people in Beijing and Auckland to create beautiful codes and robust solutions.
 
 
-I’m passionate about building high quality applications and user interfaces with modern web technologies, test driven development and agile methodology.
+I’m passionate about building high quality applications and user interfaces with modern web technologies, test driven development and agile methodology.</b>
 
 
-###Java
+### Java
+
 * Java SE
 * OOP/OOD
 * Spring
@@ -22,21 +23,24 @@ I’m passionate about building high quality applications and user interfaces wi
 * Design Pattern
 
 
-###Database
+### Database
+
 * SQL Server
 * Mysql
 * Mongodb
 * Oracle
 
 
-###JavaScript
+### JavaScript
+
 * AngularJS
 * NodeJs/ExpressJs
 * Restful Web Services
 * Bootstrap
 
 
-###Big Data
+### Big Data
+
 * Hadoop
 * Hive
 * Hbase
@@ -44,12 +48,14 @@ I’m passionate about building high quality applications and user interfaces wi
 * zookeeper
 
 
-###Agile
+### Agile
+
 * TDD
 * Scrum
 
 
-###Others
+### Others
+
 * HTML/CSS
 * SVN/Git
 * Markdown
