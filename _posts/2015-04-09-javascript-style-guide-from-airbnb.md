@@ -5,7 +5,7 @@ description:
 category: work
 ---
 <link rel="stylesheet" type="text/css" href="/js/prettify/css/github.css" />
-####类型
+#### 类型
 * 基本类型 Primitives
   * string
   * number
@@ -55,7 +55,7 @@ category: work
   };
   </pre>
  
-####数组 Arrays
+#### 数组 Arrays
 * 创建对象，使用literal syntax
   <pre class="prettyprint">
   // bad
@@ -91,7 +91,7 @@ function trigger() {
 }
 </pre> 
 
-####字符串 Strings
+#### 字符串 Strings
 * 对字符串使用单引号
 <pre class="prettyprint">
 // bad
@@ -154,7 +154,7 @@ function inbox(messages) {
 }
 </pre>
 
-####函数 Functions
+#### 函数 Functions
 * 函数表达式
 <pre class="prettyprint">
 // anonymous function expression
@@ -198,7 +198,7 @@ function yup(name, options, args) {
 }
 </pre>
 
-####属性 Properties
+#### 属性 Properties
 * 使用点表示法访问属性
 <pre class="prettyprint">
 var luke = {
@@ -222,7 +222,7 @@ function getProp(prop) {
 var isJedi = getProp('jedi');
 </pre>
 
-####变量 Variables
+#### 变量 Variables
 * 总是使用var声明变量，不然其将变为全局变量。我们要想办法避免全局空间污染
 <pre class="prettyprint">
 // bad
@@ -310,7 +310,7 @@ function() {
 }
 </pre>
  
-####声明 Hoisting
+#### 声明 Hoisting
 * 变量声明是在作用域顶端，但并未赋值
 Variable declarations get hoisted to the top of their scope, but their assignment does not.
 <pre class="prettyprint">
@@ -370,7 +370,7 @@ function example() {
 }
 </pre>
 
-####运算符 Comparison Operators & Equality
+#### 运算符 Comparison Operators & Equality
 * 使用===和!==代替==和!=
 * 比较运算符进行计算时会利用ToBoolean方法进行强制转换数据类型，并遵从以下规则
   * Objects的计算值是true
@@ -404,7 +404,7 @@ if (collection.length) {
 }
 </pre>
 
-####语句块 Blocks
+#### 语句块 Blocks
 * 对多行语句块使用大括号brace
 <pre class="prettyprint">
 // bad
@@ -442,7 +442,7 @@ if (test) {
 }
 </pre>
 
-####注释 Comments
+#### 注释 Comments
 * 多行注释使用/**...*/，需包含一个描述，所有参数的具体类型，值和返回值
 <pre class="prettyprint">
 // bad
@@ -507,7 +507,7 @@ function Calculator() {
 }
 </pre>
 
-####空白 Whitespace
+#### 空白 Whitespace
 * 设置制表符为两个空格soft tabs
 * 在左大括号前留一个空格
 <pre class="prettyprint">
@@ -591,7 +591,7 @@ var leds = stage.selectAll('.led')
 </pre>
 * 在语句块和下一个语句之前留一个空行
 
-####逗号 Commas
+#### 逗号 Commas
 * 不要在语句前留逗号
 <pre class="prettyprint">
 // bad
@@ -623,7 +623,7 @@ var hero = {
 </pre>
 * 不要有多余的逗号
 
-####分号 Semicolons
+#### 分号 Semicolons
 * Yup
 <pre class="prettyprint">
 // bad
@@ -643,7 +643,7 @@ var hero = {
 })();
 </pre>
 
-####类型分配和强制转换  Type casting &　Coercion
+#### 类型分配和强制转换  Type casting &　Coercion
 * 在声明时进行类型转换
 * Strings
 <pre class="prettyprint">
@@ -700,7 +700,7 @@ var hasAge = Boolean(age);
 var hasAge = !!age;
 </pre>
 
-####命名规范
+#### 命名规范
 * 避免单字母名称，使其具有描述性
 <pre class="prettyprint">
 // bad
@@ -782,7 +782,7 @@ var CheckBox = require('./check_box');
 var CheckBox = require('./CheckBox');
 </pre>
 
-####存取器 Accessors
+#### 存取器 Accessors
 * 对于属性，访问器函数不是必须的
 * 如果定义了存取器函数，应参照 getVal() 和 setVal('hello') 格式
 <pre class="prettyprint">
@@ -821,7 +821,7 @@ Jedi.prototype.get = function(key) {
 };
 </pre>
 
-####构造函数 Constructors
+#### 构造函数 Constructors
 * 在原型对象上定义assign方法，而不要重写overwrite。重写使继承inheritance不可用，因为重写原型导致重写整个基类
 <pre class="prettyprint">
 function Jedi() {
@@ -884,7 +884,7 @@ Jedi.prototype.toString = function toString() {
 };
 </pre>
 
-####事件 Events
+#### 事件 Events
 * 当在事件对象上附加数据时（无论是DOM事件还是如Backbone一样拥有的私有事件），应传递hash对象而不是原始值，这可以让随后的贡献者给事件对象添加更多的数据，而不必去查找或者更新每一个事件处理程序。
 <pre class="prettyprint">
 // bad
@@ -901,7 +901,7 @@ $(this).on('listingUpdated', function(e, data) {
 });
 </pre>
 
-####模块 Modules
+#### 模块 Modules
 * 模块应该以 ! 开始，这能确保当脚本连接时，如果畸形模块忘记导入，包括最后一个分号，不会产生错误。
 * 文件应该以驼峰式命名，放在同名的文件夹中，和唯一出口的名称相匹配
 * 定义一个noConflict()方法来设置导出模块之前的版本,并返回当前版本。
@@ -922,7 +922,7 @@ $(this).on('listingUpdated', function(e, data) {
 }(this);
 </pre>
 
-####JQuery
+#### JQuery
 * jQuery对象变量使用前缀$
 <pre class="prettyprint">
 // bad
