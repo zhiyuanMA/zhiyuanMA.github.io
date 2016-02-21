@@ -6,10 +6,10 @@ tags: about
 ---
 
 
-<b>I'm a Java Developer, experienced in Web applications and Big Data Projects. Past 6 years I collaborated with amazing people in Beijing and Auckland to create beautiful codes and robust solutions.
+I'm a Java Developer, experienced in <b>Web applications and Big Data Projects</b>. Past <b>6 years</b> I collaborated with amazing people in Beijing and Auckland to create beautiful codes and robust solutions.
 
 
-I’m passionate about building high quality applications and user interfaces with modern web technologies, test driven development and agile methodology.</b>
+I’m passionate about building high quality applications and user interfaces with modern web technologies, test driven development and agile methodology.
 
 
 ### Java
