@@ -19,3 +19,20 @@ The important thing about this example is that balls are both game items and thr
 ![game item img](/images/twin/1.png)
 
 ### Applicability
+The Twin pattern can be used
+* to simulate multiple inheritance in a language that does not support this feature
+* to avoid certain problems of multiple inheritance such as name clashes
+
+###Structure
+The typical Structure of multiple inheritance is described in following image:
+
+![Structure img 1](/images/twin/2.png)
+
+It can be replaced be the Twin pattern Structure described in following image:
+
+![Structure img 2](/images/twin/3.png)
+
+###What happened to more than two parent classes
+The Twin pattern can be extended to more than two parent classes in a straightforward way.
+
+![Structure img 3](/images/twin/4.png)
