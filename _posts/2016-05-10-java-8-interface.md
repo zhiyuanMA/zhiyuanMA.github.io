@@ -9,6 +9,7 @@ Designing interfaces have always been a tough job because if we want to add addi
 But the default interface methods and static interface methods in Java 8 accomplish to solve this pain.  
 
 ### Defualt Method
+### Applicability
 For creating a default method in java interface, we need to use “default” keyword with the method signature. For example,
 
 ![default 1 img](/images/interface/5_10_1.png)
