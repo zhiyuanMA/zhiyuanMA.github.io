@@ -9,7 +9,7 @@ Designing interfaces have always been a tough job because if we want to add addi
 But the default interface methods and static interface methods in Java 8 accomplish to solve this pain.  
 
 ### Defualt Method
-### Applicability
+
 For creating a default method in java interface, we need to use “default” keyword with the method signature. For example,
 
 ![default 1 img](/images/interface/5_10_1.png)
@@ -29,7 +29,7 @@ So to make sure, this problem won’t occur in interfaces, it’s made mandatory
 
 ![default err img](/images/interface/5_10_4.png)
 
-#### Tips of Default Method
+####    Tips of Default Method
 
 1.  Java interface default methods will help us in extending interfaces without having the fear of breaking implementation classes.
 2.  Java interface default methods has bridge down the differences between interfaces and abstract classes.
@@ -39,13 +39,14 @@ So to make sure, this problem won’t occur in interfaces, it’s made mandatory
 
 
 ### Static Method
+
 Java interface static method is similar to default method, but we cannot override them in the implementation classes(there could be a method with same name). This feature helps us in avoiding undesired results in case of poor implementation in sub classes. Let’s look into this with a simple example,
 
 ![default err img](/images/interface/5_10_5.png)
 
 Notice that *Java interface static method is visible to interface methods only*, the sub classes cannot use the static interface methods. However like other static methods, we can use interface static methods using interface name.
 
-#### Tips of Static Method
+####    Tips of Static Method
 1.  Java interface static method is part of interface, we cannot use it for implementation class objects.
 2.  Java interface static methods are good for providing utility methods, for example null check, collection sorting etc.
 3.  Java interface static method helps us in providing security by not allowing implementation classes to override them.
@@ -54,6 +55,7 @@ Notice that *Java interface static method is visible to interface methods only*,
 
 
 ### Functional Interface
+
 One of the major reason for introducing default methods in interfaces is to enhance the Collections API in Java 8 to support **lambda expressions**.
 
 
