@@ -8,7 +8,7 @@ tags: about
 I'm a Java Developer, experienced in <b>Web applications and Big Data Projects</b>. Past <b>6 years</b> I collaborated with amazing people in Beijing and Auckland to create beautiful codes and robust solutions.
 
 
-I’m passionate about building high quality applications and user interfaces with modern web technologies, test driven development and agile methodology.
+I’m passionate about building high quality applications and user interfaces with modern web and cloud technologies, test driven development and agile methodologies.
 
 
 ## My Skills
@@ -16,29 +16,31 @@ I’m passionate about building high quality applications and user interfaces wi
 
 ### Java
 
-* Java SE
+* Java 1.8+
 * OOP/OOD
 * Spring
 * Spring MVC
+* Spring Boot
 * Hibernate
 * Mybatis
 * Design Pattern
+* Restful Web Services
 
 
 ### Database
 
+* Mongodb
 * SQL Server
 * Mysql
-* Mongodb
 * Oracle
 
 
 ### JavaScript
 
-* AngularJS
-* NodeJs/ExpressJs
-* Restful Web Services
-* Bootstrap
+* ReactJs
+* NodeJs
+* CasperJs
+* Phantomjs
 
 
 ### Big Data
@@ -47,7 +49,7 @@ I’m passionate about building high quality applications and user interfaces wi
 * Hive
 * Hbase
 * Mahout
-* zookeeper
+* Zookeeper
 
 
 ### Agile
@@ -58,7 +60,11 @@ I’m passionate about building high quality applications and user interfaces wi
 
 ### Others
 
-* HTML/CSS
+* AWS
+* Docker
+* Shell
+* Python
 * SVN/Git
 * Markdown
+
 
