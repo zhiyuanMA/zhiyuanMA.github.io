@@ -59,7 +59,7 @@ Collections.sort(names, (String a, String b) -> {
 });
 </pre>
 
-As you can see the code is much shorter and easier to read. But it gets even shorter:
+The code is much shorter and easier to read. But it gets even shorter:
 
 <pre class="prettyprint">
 Collections.sort(names, (String a, String b) -> b.compareTo(a));
