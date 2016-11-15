@@ -36,7 +36,7 @@ ds.sqrt(16);        // 4.0
 The `ds` is implemented as an anonymous object. The code is quite verbose: 6 lines of code for such a simple method. 
 In the next section, there's a much nicer way of implementing single method objects in Java 8.
 
-#### Lambda expressions
+## Lambda expressions
 How to sort a list of strings in prior versions of Java, there is an example:
 
 <pre class="prettyprint">
@@ -48,6 +48,7 @@ Collections.sort(names, new Comparator<String>() {
         return b.compareTo(a);
     }
 });
+
 </pre>
 
 The static utility method `Collections.sort` accepts a list and a comparator in order to sort the elements of the given list. You often find yourself creating anonymous comparators and pass them to the `sort` method.
