@@ -8,7 +8,7 @@ categories: pattern
 Now We know something about `Default Methods for Interfaces` from my last [blog](http://zhiyuanma.github.io/pattern/2016/05/10/java-8-interface/).
 Java 8 enables us to add non-abstract method implementations to interfaces by beginning with the `default` keyword. This feature is also known as Extension Methods. Here is our first example:
 
-<pre class="prettyprint">
+```java
 interface DoSomething {
     double cal(int a);
 
@@ -16,12 +16,12 @@ interface DoSomething {
         return Math.sqrt(a);
     }
 }
-</pre>
+```
 
 Besides the abstract method `cal` the interface `DoSomething` also defines the default method `sqrt`. 
 Sub-classes only have to implement the abstract method `cal`. The default method `sqrt` can be used out of the box.
 
-<pre class="prettyprint">
+```java
 DoSomething ds = new DoSomething() {
     @Override
     public double cal(int a) {
@@ -31,7 +31,7 @@ DoSomething ds = new DoSomething() {
 
 ds.calculate(5);     // 5.0
 ds.sqrt(16);        // 4.0
-</pre>
+```
 
 The `ds` is implemented as an anonymous object. The code is quite verbose: 6 lines of code for such a simple method. 
 In the next section, there's a much nicer way of implementing single method objects in Java 8.
@@ -53,23 +53,23 @@ The static utility method `Collections.sort` accepts a list and a comparator in 
 You often find yourself creating anonymous comparators and pass them to the `sort` method.
 Instead of creating anonymous objects all day long, Java 8 comes with a much shorter syntax, lambda expressions:
 
-<pre class="prettyprint">
+```java
 Collections.sort(names, (String a, String b) -> {
     return b.compareTo(a);
 });
-</pre>
+```
 
 The code is much shorter and easier to read. But it gets even shorter:
 
-<pre class="prettyprint">
+```java
 Collections.sort(names, (String a, String b) -> b.compareTo(a));
-</pre>
+```
 
 For one line method bodies you could skip both the braces {} and the `return` keyword. Now it gets even more shorter:
 
-<pre class="prettyprint">
+```java
 Collections.sort(names, (a, b) -> b.compareTo(a));
-</pre>
+```
 
 The java compiler is aware of the parameter types so you can skip them as well. 
 Let's dive deeper into how lambda expressions can be used in the wild. I'll begin with the `Functional Interface`.
@@ -80,7 +80,7 @@ We can use arbitrary interfaces as lambda expressions as long as the interface o
 To ensure that your interface meet the requirements, you could add the `@FunctionalInterface` annotation. 
 The compiler is aware of this annotation and throws a compiler error as soon as you try to add a second abstract method declaration to the interface.
 
-<pre class="prettyprint">
+```java
 @FunctionalInterface
 interface Transformer<F, T> {
     T transform(F before);
@@ -88,7 +88,7 @@ interface Transformer<F, T> {
 Transformer<String, Integer> transformer = (before) -> Integer.valueOf(before);
 Integer after = transformer.transform("123");
 System.out.println(after);    // 123
-</pre>
+```
 
 Keep in mind that the code is also valid if you forget the `@FunctionalInterface` annotation.
 
@@ -98,8 +98,55 @@ The above example code can be further simplified by utilizing static method refe
 ## Method and Constructor References
 The above example code can be further simplified by utilizing static method references:
 
-<pre class="prettyprint">
+```java
 Transformer<String, Integer> transformer = Integer::valueOf;
-Integer after = transformer.transformer("123");
+Integer after = transformer.transform("123");
 System.out.println(after);   // 123
-</pre>
+```
+
+Java 8 enables you to pass references of methods or constructors via the :: keyword. 
+The above example shows how to reference a static method. But we can also reference object methods:
+
+```java
+class Something {
+    String startsWith(String s) {
+        return String.valueOf(s.charAt(0));
+    }
+}
+Something something = new Something();
+Transformer<String, String> transformer = something::startsWith;
+String after = transformer.transform("Java");
+System.out.println(after);    // "J"
+```
+
+Let's see how the `::` keyword works for constructors. First we define an example bean with different constructors:
+
+class Person {
+    String firstName;
+    String lastName;
+
+    Person() {}
+
+    Person(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+}
+Next we specify a person factory interface to be used for creating new persons:
+
+```java
+interface PersonFactory<P extends Person> {
+    P create(String firstName, String lastName);
+}
+```
+
+Instead of implementing the factory manually, we glue everything together via constructor references:
+
+```java
+PersonFactory<Person> personFactory = Person::new;
+Person person = personFactory.create("Mark", "Ma");
+```
+
+We create a reference to the Person constructor via `Person::new`. The Java compiler automatically chooses the right constructor by matching the signature of `PersonFactory.create`.
+
+## Lambda Scopes
