@@ -4,10 +4,11 @@ title:      The Lambda in Java 8
 categories: pattern
 ---
 
-Now We know something about `Default Methods for Interfaces` from my last ![blog](http://zhiyuanma.github.io/pattern/2016/05/10/java-8-interface/).
+<link rel="stylesheet" type="text/css" href="/js/prettify/css/github.css" />
+Now We know something about `Default Methods for Interfaces` from my last [blog](http://zhiyuanma.github.io/pattern/2016/05/10/java-8-interface/).
 Java 8 enables us to add non-abstract method implementations to interfaces by beginning with the `default` keyword. This feature is also known as Extension Methods. Here is our first example:
 
-`
+<pre class="prettyprint">
 interface DoSomething {
     double cal(int a);
 
@@ -15,11 +16,12 @@ interface DoSomething {
         return Math.sqrt(a);
     }
 }
-`
+</pre>
+
 Besides the abstract method `cal` the interface `DoSomething` also defines the default method `sqrt`. 
 Sub-classes only have to implement the abstract method `cal`. The default method `sqrt` can be used out of the box.
 
-`
+<pre class="prettyprint">
 DoSomething ds = new DoSomething() {
     @Override
     public double cal(int a) {
@@ -29,4 +31,4 @@ DoSomething ds = new DoSomething() {
 
 ds.calculate(5);     // 5.0
 ds.sqrt(16);        // 4.0
-`
+</pre>
