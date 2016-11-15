@@ -49,7 +49,8 @@ Collections.sort(names, new Comparator<String>() {
 });
 </pre>
 
-The static utility method `Collections.sort` accepts a list and a comparator in order to sort the elements of the given list. You often find yourself creating anonymous comparators and pass them to the `sort` method.
+The static utility method `Collections.sort` accepts a list and a comparator in order to sort the elements of the given list. 
+You often find yourself creating anonymous comparators and pass them to the `sort` method.
 Instead of creating anonymous objects all day long, Java 8 comes with a much shorter syntax, lambda expressions:
 
 <pre class="prettyprint">
