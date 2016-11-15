@@ -161,27 +161,27 @@ read final local variables from the outer scope of lambda expressions:
 
 ```java
 final int num = 1;
-Converter<Integer, String> stringConverter =
+Transformer<Integer, String> stringTranformer =
         (from) -> String.valueOf(from + num);
 
-stringConverter.convert(2);     // 3
+stringTranformer.convert(2);     // 3
 ```
 
 But different to anonymous objects the variable num does not have to be declared `final`. This code is also valid:
 
 ```java
 int num = 1;
-Converter<Integer, String> stringConverter =
+Transformer<Integer, String> stringTranformer =
         (from) -> String.valueOf(from + num);
 
-stringConverter.convert(2);     // 3
+stringTranformer.convert(2);     // 3
 ```
 
 However num must be implicitly final for the code to compile. The following code does not compile:
 
 ```java
 int num = 1;
-Converter<Integer, String> stringConverter =
+Transformer<Integer, String> stringTranformer =
         (from) -> String.valueOf(from + num);
 num = 3;
 ```
@@ -214,8 +214,79 @@ class Lambda4 {
 
 #### Accessing Default Interface Methods
 
-Remember the formula example from the first section? Interface Formula defines a default method sqrt which can be accessed from each formula instance including anonymous objects. This does not work with lambda expressions.
+Remember the `DoSomething` example from the first section? `DoSomething` defines a default method `sqrt` which can be accessed from each instance including anonymous objects. 
+This does not work with lambda expressions.
+Default methods cannot be accessed from lambda expressions. The following code does not compile:
 
-Default methods cannot be accessed from within lambda expressions. The following code does not compile:
-
+```java
 Formula formula = (a) -> sqrt( a * 100);
+```
+
+## Built-in Functional Interfaces
+
+The JDK 1.8 API contains many built-in functional interfaces. 
+Some of them are well known from older versions of Java like `Comparator` or `Runnable`. 
+Those existing interfaces are extended to enable Lambda support via the `@FunctionalInterface` annotation.
+
+But the Java 8 API is also full of new functional interfaces to make your work easier. 
+Some of those new interfaces are well known from the `Google Guava` library. 
+
+#### Predicates
+
+`Predicates` are boolean-valued functions of one argument. The interface contains various default methods for composing predicates to complex logical terms (and, or, negate)
+
+```java
+Predicate<String> predicate = (s) -> s.length() > 0;
+
+predicate.test("foo");              // true
+predicate.negate().test("foo");     // false
+
+Predicate<Boolean> nonNull = Objects::nonNull;
+Predicate<Boolean> isNull = Objects::isNull;
+
+Predicate<String> isEmpty = String::isEmpty;
+Predicate<String> isNotEmpty = isEmpty.negate();
+```
+
+#### Functions
+
+`Functions` accept one argument and produce a result. Default methods can be used to chain multiple functions together (compose, andThen).
+
+```java
+Function<String, Integer> toInteger = Integer::valueOf;
+Function<String, String> backToString = toInteger.andThen(String::valueOf);
+
+backToString.apply("123");     // "123"
+```
+
+#### Suppliers
+
+`Suppliers` produce a result of a given generic type. Unlike `Functions`, `Suppliers` don't accept arguments.
+
+```java
+Supplier<Person> personSupplier = Person::new;
+personSupplier.get();   // new Person
+```
+
+#### Consumers
+
+`Consumers` represents operations to be performed on a single input argument.
+
+```java
+Consumer<Person> greeter = (p) -> System.out.println("Hello, " + p.firstName);
+greeter.accept(new Person("Marm", "Ma"));
+```
+
+#### Comparators
+
+`Comparators` are well known from older versions of Java. Java 8 adds various default methods to the interface.
+
+```java
+Comparator<Person> comparator = (p1, p2) -> p1.firstName.compareTo(p2.firstName);
+
+Person p1 = new Person("Mark", "Ma");
+Person p2 = new Person("Donald", "Trump");
+
+comparator.compare(p1, p2);             // > 0
+comparator.reversed().compare(p1, p2);  // < 0
+```
