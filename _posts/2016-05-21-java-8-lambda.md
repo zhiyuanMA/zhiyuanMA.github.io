@@ -41,14 +41,12 @@ How to sort a list of strings in prior versions of Java, there is an example:
 
 <pre class="prettyprint">
 List<String> names = Arrays.asList("a", "b", "c", "d");
-
 Collections.sort(names, new Comparator<String>() {
     @Override
     public int compare(String a, String b) {
         return b.compareTo(a);
     }
 });
-
 </pre>
 
 The static utility method `Collections.sort` accepts a list and a comparator in order to sort the elements of the given list. You often find yourself creating anonymous comparators and pass them to the `sort` method.
