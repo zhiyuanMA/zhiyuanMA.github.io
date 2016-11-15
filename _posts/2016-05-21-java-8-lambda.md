@@ -73,6 +73,8 @@ Collections.sort(names, (a, b) -> b.compareTo(a));
 
 The java compiler is aware of the parameter types so you can skip them as well. 
 Let's dive deeper into how lambda expressions can be used in the wild. I'll begin with the `Functional Interface`.
+
+
 Each lambda corresponds to a given type, specified by an interface -- functional interface must contain exactly one abstract method declaration. 
 Each lambda expression of that type will be matched to this abstract method. Since default methods are not abstract you're free to add default methods to your functional interface.
 
@@ -91,9 +93,6 @@ System.out.println(after);    // 123
 ```
 
 Keep in mind that the code is also valid if you forget the `@FunctionalInterface` annotation.
-
-The above example code can be further simplified by utilizing static method references:
-
 
 ## Method and Constructor References
 The above example code can be further simplified by utilizing static method references:
@@ -121,6 +120,7 @@ System.out.println(after);    // "J"
 
 Let's see how the `::` keyword works for constructors. First we define an example bean with different constructors:
 
+```java
 class Person {
     String firstName;
     String lastName;
@@ -132,6 +132,8 @@ class Person {
         this.lastName = lastName;
     }
 }
+```
+
 Next we specify a person factory interface to be used for creating new persons:
 
 ```java
@@ -150,3 +152,70 @@ Person person = personFactory.create("Mark", "Ma");
 We create a reference to the Person constructor via `Person::new`. The Java compiler automatically chooses the right constructor by matching the signature of `PersonFactory.create`.
 
 ## Lambda Scopes
+Accessing outer scope variables from lambda expressions is very similar to anonymous objects. 
+Lambda can access final variables from the local outer scope as well as instance fields and static variables.
+
+#### Accessing local variables
+
+read final local variables from the outer scope of lambda expressions:
+
+```java
+final int num = 1;
+Converter<Integer, String> stringConverter =
+        (from) -> String.valueOf(from + num);
+
+stringConverter.convert(2);     // 3
+```
+
+But different to anonymous objects the variable num does not have to be declared `final`. This code is also valid:
+
+```java
+int num = 1;
+Converter<Integer, String> stringConverter =
+        (from) -> String.valueOf(from + num);
+
+stringConverter.convert(2);     // 3
+```
+
+However num must be implicitly final for the code to compile. The following code does not compile:
+
+```java
+int num = 1;
+Converter<Integer, String> stringConverter =
+        (from) -> String.valueOf(from + num);
+num = 3;
+```
+
+Writing to num from within the lambda expression is also prohibited.
+
+#### Accessing fields and static variables
+
+In constrast to local variables we have both read and write access to instance fields and static variables in lambda expressions. 
+This behaviour is well known from anonymous objects.
+
+```java
+class Lambda4 {
+    static int outerStaticNum;
+    int outerNum;
+
+    void testScopes() {
+        Tranformer<Integer, String> stringTranformer1 = (before) -> {
+            outerNum = 2;
+            return String.valueOf(before);
+        };
+
+        Tranformer<Integer, String> stringTranformer2 = (before) -> {
+            outerStaticNum = 7;
+            return String.valueOf(before);
+        };
+    }
+}
+```
+
+#### Accessing Default Interface Methods
+
+Remember the formula example from the first section? Interface Formula defines a default method sqrt which can be accessed from each formula instance including anonymous objects. This does not work with lambda expressions.
+
+Default methods cannot be accessed from within lambda expressions. The following code does not compile:
+
+Formula formula = (a) -> sqrt( a * 100);
