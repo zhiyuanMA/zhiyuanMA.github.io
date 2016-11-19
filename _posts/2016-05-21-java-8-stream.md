@@ -118,57 +118,27 @@ String after = transformer.transform("Java");
 System.out.println(after);    // "J"
 ```
 
-There are three main kinds of method references:
-*  A method reference to a static method (for example, the method parseInt of Integer, written Integer::parseInt)
-*  A method reference to an instance method of an arbitrary type (for example, the method length of a String, written `String::length`)
-*  A method reference to an instance method of an existing object (for example, suppose you have a local variable `transformer` 
-that holds an object of type `Transformer`, which supports an instance method `getValue`; you can write `transformer::getValue`)
-
-
-Let's see how the `::` keyword works for constructors. First we define an example bean with default constructors:
+Let's see how the `::` keyword works for constructors. First we define an example bean with different constructors:
 
 ```java
 class Person {
-    String name;
-
-    Person() {}
-}
-
-Supplier<Person> sp1 = Person::new;
-```
-
-This is equivalent to 
-
-
-```java
-Supplier<Person> sp2 = ()->new Person();
-```
-
-What will happen if you have a constructor with signature, it fits the signature of the Function interface, so you can do this,
-
-```java
-class Person {
-    String name;
+    String firstName;
+    String lastName;
 
     Person() {}
 
-    Person(String name){
-        this.name = name;
+    Person(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 }
-
-Function<String,Person> fp = s->new Person(s);
-fp.apply("Mark");
-
-Function<String,Person> fp1 = Person::new;
-fp1.apply("Mark");
 ```
 
-But if `Person` has a constructor with 3 or more signatures, what should we do? Next we specify a person factory interface to be used for creating new persons:
+Next we specify a person factory interface to be used for creating new persons:
 
 ```java
 interface PersonFactory<P extends Person> {
-    P create(String firstName, String middleName, String lastName, int age, double weight);
+    P create(String firstName, String lastName);
 }
 ```
 
@@ -176,11 +146,10 @@ Instead of implementing the factory manually, we glue everything together via co
 
 ```java
 PersonFactory<Person> personFactory = Person::new;
-Person person = personFactory.create("Mark", "" , "Ma", 27, 65);
+Person person = personFactory.create("Mark", "Ma");
 ```
 
 We create a reference to the Person constructor via `Person::new`. The Java compiler automatically chooses the right constructor by matching the signature of `PersonFactory.create`.
-
 
 ## Lambda Scopes
 Accessing outer scope variables from lambda expressions is very similar to anonymous objects. 
