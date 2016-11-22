@@ -158,3 +158,49 @@ public class StringTest {
 指令实现如下：
 
 ![5](/images/string/5.png)
+
+#### Jdk8中的String新改变 - StringJoiner & String.join
+
+Jdk8提供了两种方式来完成以下的字符串链接
+
+```java
+String getString(List<String> items)
+	StringBuilder sb = new StringBuilder();
+	for(String item : items) {
+		if(sb.length != 0) {
+			sb.append(",");
+		}
+		sb.append(item);
+	}
+	return sb.toString();
+}
+```
+
+在Jdk8中可以很便捷的方式来实现：
+
+```java
+String getString(List<String> items) {
+    StringJoiner stringJoiner = new StringJoiner(", ");
+    items.stream().forEach(stringJoiner::add);
+    return stringJoiner.toString();
+}
+```
+
+或者
+
+```java
+String getString(List<String> items) {
+    String joined = String.join("/", "usr", "local", "bin");
+    System.out.println(joined);
+}
+```
+
+`StringJoiner`更高级的用法，设置前缀和后缀
+
+```java
+String getString(List<String> items) {
+    StringJoiner stringJoiner = new StringJoiner(", ", "<<", ">>");
+    items.stream().forEach(stringJoiner::add);
+    return stringJoiner.toString();  // <<One, Two, Tree, Four>>
+}
+```
