@@ -4,6 +4,7 @@ title:      JVM - Java内存模型和类加载机制
 categories: java
 ---
 ## JVM内存区域模型
+
 #### 方法区
 
 #### 虚拟机栈

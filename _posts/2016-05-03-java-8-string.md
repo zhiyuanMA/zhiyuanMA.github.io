@@ -159,7 +159,7 @@ public class StringTest {
 
 ![5](/images/string/5.png)
 
-#### Jdk8中的String新改变 - StringJoiner & String.join
+## Jdk8中的String新改变 - StringJoiner & String.join
 
 Jdk8提供了两种方式来完成以下的字符串链接
 
