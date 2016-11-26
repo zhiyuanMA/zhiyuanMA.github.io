@@ -1,7 +1,7 @@
 ---
 layout:     post
 title:      String in Java
-categories: pattern
+categories: Java
 ---
 
 一段很简单的代码来展示String在Java的一般用法

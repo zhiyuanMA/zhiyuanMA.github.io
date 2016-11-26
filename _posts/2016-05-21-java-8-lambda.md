@@ -1,7 +1,7 @@
 ---
 layout:     post
 title:      The Lambda in Java 8
-categories: pattern
+categories: Java
 ---
 
 <link rel="stylesheet" type="text/css" href="/js/prettify/css/github.css" />

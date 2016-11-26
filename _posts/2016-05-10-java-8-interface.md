@@ -1,7 +1,7 @@
 ---
 layout:     post
 title:      The evolution of Interface in Java 8
-categories: pattern
+categories: Java
 ---
 
 Designing interfaces have always been a tough job because if we want to add additional methods in the interfaces, it will require change in all the implementing classes. 

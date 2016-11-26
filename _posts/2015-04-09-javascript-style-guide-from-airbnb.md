@@ -2,7 +2,7 @@
 layout: post
 title: JavaScript编码规范 - From Airbnb
 description: 
-category: work
+category: javascript
 ---
 <link rel="stylesheet" type="text/css" href="/js/prettify/css/github.css" />
 #### 类型
