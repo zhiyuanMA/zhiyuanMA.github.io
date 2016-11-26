@@ -10,6 +10,8 @@ HashMap是Java程序员使用频率最高的用于映射(键值对)处理的数�
 随着JDK（Java Developmet Kit）版本的更新，JDK1.8对HashMap底层的实现进行了优化，例如引入红黑树的数据结构和扩容的优化等。
 本文结合JDK1.7和JDK1.8的区别，深入探讨HashMap的结构实现和功能原理。
 
+***
+
 ## 简介
 
 Java为数据结构中的映射定义了一个接口java.util.Map，此接口主要有四个常用的实现类，分别是HashMap、Hashtable、LinkedHashMap和TreeMap，类继承关系如下图所示：
@@ -44,7 +46,7 @@ Java为数据结构中的映射定义了一个接口java.util.Map，此接口主
 
 这里需要讲明白两个问题：数据底层具体存储的是什么？这样的存储方式有什么优点呢？
 
-1. 从源码可知，HashMap类中有一个非常重要的字段，就是 Node[] table，即哈希桶数组，明显它是一个Node的数组。我们来看Node[JDK1.8]是何物。
+1.从源码可知，HashMap类中有一个非常重要的字段，就是 Node[] table，即哈希桶数组，明显它是一个Node的数组。我们来看Node[JDK1.8]是何物。
 
 ```java
 static class Node<K,V> implements Map.Entry<K,V> {
@@ -66,7 +68,7 @@ static class Node<K,V> implements Map.Entry<K,V> {
 
 Node是HashMap的一个内部类，实现了Map.Entry接口，本质是就是一个映射(键值对)。上图中的每个黑色圆点就是一个Node对象。
 
-2. HashMap就是使用哈希表来存储的。哈希表为解决冲突，可以采用开放地址法和链地址法等来解决问题，Java中HashMap采用了链地址法。
+2.HashMap就是使用哈希表来存储的。哈希表为解决冲突，可以采用开放地址法和链地址法等来解决问题，Java中HashMap采用了链地址法。
 
 链地址法，简单来说，就是数组加链表的结合。在每个数组元素上都一个链表结构，当数据被Hash后，得到数组下标，把数据放在对应下标元素的链表上。例如程序执行下面代码：
 
@@ -116,6 +118,7 @@ HashMap的内部功能实现很多，本文主要从根据key获取哈希桶数�
 不管增加、删除、查找键值对，定位到哈希桶数组的位置都是很关键的第一步。前面说过HashMap的数据结构是数组和链表的结合，所以我们当然希望这个HashMap里面的元素位置尽量分布均匀些，尽量使得每个位置上的元素数量只有一个，那么当我们用hash算法求得这个位置的时候，马上就可以知道对应位置的元素就是我们要的，不用遍历链表，大大优化了查询的效率。HashMap定位数组索引位置，直接决定了hash方法的离散性能。先看看源码的实现(方法一+方法二):
 
 方法一：
+
 ```java
 static final int hash(Object key) {   //jdk1.8 & jdk1.7
      int h;
@@ -126,6 +129,7 @@ static final int hash(Object key) {   //jdk1.8 & jdk1.7
 ```
 
 方法二：
+
 ```java
 static int indexFor(int h, int length) {  //jdk1.7的源码，jdk1.8没有这个方法，但是实现原理一样的
      return h & (length-1);  //第三步 取模运算
@@ -536,7 +540,7 @@ class Key implements Comparable<Key> {
 
 从表中结果中可知，随着size的变大，JDK1.7的花费时间是增长的趋势，而JDK1.8是明显的降低趋势，并且呈现对数增长稳定。当一个链表太长的时候，HashMap会动态的将它替换成一个红黑树，这话的话会将时间复杂度从O(n)降为O(logn)。hash算法均匀和不均匀所花费的时间明显也不相同，这两种情况的相对比较，可以说明一个好的hash算法的重要性。
 
-      <I>测试环境：处理器为2.2 GHz Intel Core i7，内存为16 GB 1600 MHz DDR3，SSD硬盘，使用默认的JVM参数，运行在64位的OS X 10.10.1</I>
+      *测试环境：处理器为2.2 GHz Intel Core i7，内存为16 GB 1600 MHz DDR3，SSD硬盘，使用默认的JVM参数，运行在64位的OS X 10.10.1*
 
 ## 小结
 
