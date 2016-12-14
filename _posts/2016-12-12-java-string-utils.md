@@ -1,326 +1,141 @@
 ---
 layout:     post
-title:      The Date in Java 8
+title:      The Usage of SuperStr
 categories: Java
 ---
 
-## Why do we need new Java Date Time API?
-
-Before we start looking at the Java 8 Date Time API, let’s see why do we need a new API for this. 
-There have been several problems with the existing date and time related classes in java, some of them are:
-
-1. Java Date Time classes are not defined consistently, we have Date Class in both `java.util` as well as `java.sql` packages. Again formatting and parsing classes are defined in `java.text` package.
-2. `java.util.Date` contains both date and time, whereas `java.sql.Date` contains only date. Having this in `java.sql` package doesn’t make sense. Also both the classes have same name, that is a very bad design itself.
-3. There are no clearly defined classes for time, timestamp, formatting and parsing. We have `java.text.DateFormat` abstract class for parsing and formatting need. Usually `SimpleDateFormat` class is used for parsing and formatting.
-4. All the Date classes are mutable, so they are not thread safe. It’s one of the biggest problem with `Java Date and Calendar` classes.
-5. `Date` class doesn’t provide internationalization, there is no timezone support. So `java.util.Calendar` and `java.util.TimeZone` classes were introduced, but they also have all the problems listed above.
-
-There are some other issues with the methods defined in `Date` and `Calendar` classes but above problems make it clear that a robust Date Time API was needed in Java. That’s why `Joda Time` played a key role as a quality replacement for Java Date Time requirements.
-
-
-## Java 8 Date
-Java 8 Date Time API is JSR-310 implementation. It is designed to overcome all the flaws in the legacy date time implementations. 
-Some of the design principles of new Date Time API are:
-
-1. **Immutability**: All the classes in the new Date Time API are immutable and good for multithreaded environments.
-2. **Separation of Concerns**: The new API separates clearly between human readable date time and machine time (unix timestamp). It defines separate classes for Date, Time, DateTime, Timestamp, Timezone etc.
-3. **Clarity**: The methods are clearly defined and perform the same action in all the classes. For example, to get the current instance we have now() method. There are format() and parse() methods defined in all these classes rather than having a separate class for them. All the classes use **Factory Pattern and Strategy Pattern** for better handling. Once you have used the methods in one of the class, working with other classes won’t be hard.
-4. **Utility operations**: All the new Date Time API classes comes with methods to perform common tasks, such as plus, minus, format, parsing, getting separate part in date/time etc.
-5. **Extendable**: The new Date Time API works on ISO-8601 calendar system but we can use it with other non ISO calendars as well.
-
-## Java 8 Date Time API Packages
-
-Java 8 Date Time API consists of following packages.
-
-1. `java.time Package`: This is the base package of new Java Date Time API. All the major base classes are part of this package, such as LocalDate, LocalTime, LocalDateTime, Instant, Period, Duration etc. All of these classes are immutable and thread safe. Most of the times, these classes will be sufficient for handling common requirements.
-2. `java.time.chrono Package`: This package defines generic APIs for non ISO calendar systems. We can extend AbstractChronology class to create our own calendar system.
-3. `java.time.format Package`: This package contains classes used for formatting and parsing date time objects. Most of the times, we would not be directly using them because principle classes in java.time package provide formatting and parsing methods.
-4. `java.time.temporal Package`: This package contains temporal objects and we can use it for find out specific date or time related to date/time object. For example, we can use these to find out the first or last day of the month. You can identify these methods easily because they always have format “withXXX”.
-5. `java.time.zone Package`: This package contains classes for supporting different time zones and their rules.
-
-## Java 8 Date Time API Examples
-
-#### LocalDate
-`LocalDate` is an immutable class that represents Date with default format of **yyyy-MM-dd**. We can use `now()` method to get the current date. 
-We can also provide input arguments for year, month and date to create LocalDate instance. 
-
-
-This class provides overloaded method for now() where we can pass `ZoneId` for getting date in specific time zone. This class provides the same functionality as `java.sql.Date`. Let’s look at a simple example for it’s usage.
+## slice
+Just like the **slice** methon in JavaScript
 
 ```java
-//Current Date
-LocalDate today = LocalDate.now();
-System.out.println("Current Date = "+today);
-//Creating LocalDate by providing input arguments
-LocalDate firstDay_2016 = LocalDate.of(2016, Month.JANUARY, 1);
-System.out.println("Specific Date = "+firstDay_2016);
+	// delete characters
+	assertEquals(SuperStr.slice("mazhiyuan", 0, 1), "azhiyuan");
+    assertEquals(SuperStr.slice("mazhiyuan", 0, 10), "");
+    assertEquals(SuperStr.slice("mazhiyuan", 0, 0), "mazhiyuan");
+    assertEquals(SuperStr.slice("mazhiyuan", 3, 2), "mazyuan");
 
-//Current date in "Asia/Hong_Kong", you can get it from ZoneId javadoc
-LocalDate todayHK = LocalDate.now(ZoneId.of("Asia/Hong_Kong"));
-System.out.println("Current Date in IST = "+todayHK);
-
-//java.time.zone.ZoneRulesException: Unknown time-zone ID: IST
-//LocalDate todayIST = LocalDate.now(ZoneId.of("IST"));
-
-//Getting date from the base date i.e 01/01/1970
-LocalDate dateFromBase = LocalDate.ofEpochDay(365);
-System.out.println("365th day from base date = "+dateFromBase);
-
-LocalDate hundredDay2016 = LocalDate.ofYearDay(2016, 100);
-System.out.println("100th day of 2016 = "+hundredDay2016);
-///////output/////////
-
-Current Date = 2016-06-15
-Specific Date = 2016-01-01
-Current Date in IST = 2016-11-25
-365th day from base date = 1971-01-01
-100th day of 2016 = 2016-04-09
+    //insert or replace characters
+    assertEquals(SuperStr.slice("mazhiyuan", 4, 3, "b"), "mazhban");
+    assertEquals(SuperStr.slice("mazhiyuan", 4, 3, "b", "d", "w"), "mazhbdwan");
+    assertEquals(SuperStr.slice("mazhiyuan", 4, 0, "b", "d"), "mazhbdiyuan");
 ```
 
-#### LocalTime
-LocalTime is an immutable class whose instance represents a time in the human readable format. It’s default format is **hh:mm:ss.zzz**. Just like LocalDate, this class provides time zone support and creating instance by passing hour, minute and second as input arguments. Let’s look at it’s usage with a simple program.
+## append
 
 ```java
-//Current Time
-LocalTime time = LocalTime.now();
-System.out.println("Current Time="+time);
-
-//Creating LocalTime by providing input arguments
-LocalTime specificTime = LocalTime.of(12,20,25,40);
-System.out.println("Specific Time of Day="+specificTime);
-
-
-//Try creating time by providing invalid inputs
-//LocalTime invalidTime = LocalTime.of(25,20);
-//Exception in thread "main" java.time.DateTimeException:
-//Invalid value for HourOfDay (valid values 0 - 23): 25
-
-//Current date in "Asia/Hong_Kong", you can get it from ZoneId javadoc
-LocalTime timeHK = LocalTime.now(ZoneId.of("Asia/Hong_Kong"));
-System.out.println("Current Time in IST="+timeHK);
-
-//java.time.zone.ZoneRulesException: Unknown time-zone ID: IST
-//LocalTime todayIST = LocalTime.now(ZoneId.of("IST"));
-
-//Getting date from the base date i.e 01/01/1970
-LocalTime specificSecondTime = LocalTime.ofSecondOfDay(10000);
-System.out.println("10000th second time= "+specificSecondTime);
-
-///////output/////////
-
-Current Time=19:59:49.010
-Specific Time of Day=12:20:25.000000040
-Current Time in IST=19:59:49.011
-10000th second time= 02:46:40
+	assertEquals(SuperStr.append("m", "a", "r", "k"), "mark");
+    assertEquals(SuperStr.append("", "m", "a", "r", "k"), "mark");
 ```
 
-#### LocalDateTime
-LocalDateTime is an immutable date-time object that represents a date-time, with default format as **yyyy-MM-dd-HH-mm-ss.zzz**. It provides a factory method that takes LocalDate and LocalTime input arguments to create LocalDateTime instance. Let’s look it’s usage with a simple example.
+
+## appendArray
 
 ```java
- //Current Date
-LocalDateTime today = LocalDateTime.now();
-System.out.println("Current DateTime="+today);
-
-//Current Date using LocalDate and LocalTime
-today = LocalDateTime.of(LocalDate.now(), LocalTime.now());
-System.out.println("Current DateTime="+today);
-
-//Creating LocalDateTime by providing input arguments
-LocalDateTime specificDate = LocalDateTime.of(2016, Month.JANUARY, 1, 12, 12, 30);
-System.out.println("Specific Date="+specificDate);
-
-
-//Try creating date by providing invalid inputs
-//LocalDateTime feb29_2014 = LocalDateTime.of(2014, Month.FEBRUARY, 28, 25,1,1);
-//Exception in thread "main" java.time.DateTimeException:
-//Invalid value for HourOfDay (valid values 0 - 23): 25
-
-
-//Current date in "Asia/Hong_Kong", you can get it from ZoneId javadoc
-LocalDateTime todayHK = LocalDateTime.now(ZoneId.of("Asia/Hong_Kong"));
-System.out.println("Current Date in IST="+todayHK);
-
-//java.time.zone.ZoneRulesException: Unknown time-zone ID: IST
-//LocalDateTime todayIST = LocalDateTime.now(ZoneId.of("IST"));
-
-//Getting date from the base date i.e 01/01/1970
-LocalDateTime dateFromBase = LocalDateTime.ofEpochSecond(10000, 0, ZoneOffset);
-
-///////output/////////
-
-Current DateTime=2016-06-15T20:07:26.962
-Current DateTime=2016-06-15T20:07:26.963
-Specific Date=2016-01-01T12:12:30
-Current Date in IST=2016-06-15T20:07:26.965
-10000th second time from 01/01/1970= 1970-01-01T02:46:40
+	assertEquals(SuperStr.append("m", "a", "r", "k"), "mark");
+    assertEquals(SuperStr.append("", "m", "a", "r", "k"), "mark");
 ```
 
-In all the three examples, we have seen that if we provide invalid arguments for creating Date/Time, then it throws `java.time.DateTimeException` that is a RuntimeException, so we don’t need to explicitly catch it.
-
-We have also seen that we can get Date/Time data by passing `ZoneId`, you can get the list of supported ZoneId values from it’s javadoc.
-
-#### Instant
-Instant class is used to work with machine readable time format, it stores date time in unix timestamp. Let’s see it’s usage with a simple program.
+## at
 
 ```java
- //Current timestamp
-Instant timestamp = Instant.now();
-System.out.println("Current Timestamp = "+timestamp);
-
-//Instant from timestamp
-Instant specificTime = Instant.ofEpochMilli(timestamp.toEpochMilli());
-System.out.println("Specific Time = "+specificTime);
-
-//Duration example
-Duration thirtyDay = Duration.ofDays(365);
-System.out.println(thirtyDay);
-
-///////output/////////
-
-Current Timestamp = 2016-06-15T12:30:05.523Z
-Specific Time = 2016-06-15T12:30:05.523Z
-PT8760H
+    assertTrue(SuperStr.at("mark", 2).get().equals('r'));
+    assertSame(SuperStr.at("mark", 5), Optional.empty());
+    assertSame(SuperStr.at("mark", -3).get(), 'a'); //Support negative index
 ```
 
-#### Java 8 Date API Utilities
-As mentioned earlier, most of the Date Time principle classes provide various utility methods such as plus/minus days, weeks, months etc. 
-There are some other utility methods for adjusting the date using `TemporalAdjuster` and to calculate the period between two dates.
+## between
 
 ```java
-LocalDate today = LocalDate.now();
-
-//Get the Year, check if it's leap year
-System.out.println("Year "+today.getYear()+" is Leap Year? "+today.isLeapYear());
-
-//Compare two LocalDate for before and after
-System.out.println("Today is before 01/01/2015? "+today.isBefore(LocalDate.of(2015,1,1)));
-
-//Create LocalDateTime from LocalDate
-System.out.println("Current Time="+today.atTime(LocalTime.now()));
-
-//plus and minus operations
-System.out.println("10 days after today will be "+today.plusDays(10));
-System.out.println("3 weeks after today will be "+today.plusWeeks(3));
-System.out.println("20 months after today will be "+today.plusMonths(20));
-
-System.out.println("10 days before today will be "+today.minusDays(10));
-System.out.println("3 weeks before today will be "+today.minusWeeks(3));
-System.out.println("20 months before today will be "+today.minusMonths(20));
-
-//Temporal adjusters for adjusting the dates
-System.out.println("First date of this month= "+today.with(TemporalAdjusters.firstDayOfMonth()));
-LocalDate lastDayOfYear = today.with(TemporalAdjusters.lastDayOfYear());
-System.out.println("Last date of this year = "+lastDayOfYear);
-
-Period period = today.until(lastDayOfYear);
-System.out.println("Period Format= "+period);
-System.out.println("Months remaining in the year = "+period.getMonths());
-
-///////output/////////
-
-Year 2016 is Leap Year? true
-Today is before 01/01/2015? false
-Current Time=2016-06-15T20:34:15.692
-10 days after today will be 2016-06-25
-3 weeks after today will be 2016-07-06
-20 months after today will be 2018-02-15
-10 days before today will be 2016-06-05
-3 weeks before today will be 2016-05-25
-20 months before today will be 2014-10-15
-First date of this month= 2016-06-01
-Last date of this year = 2016-12-31
-Period Format= P6M16D
-Months remaining in the year = 6
+    assertArrayEquals(SuperStr.between("[abc][cde]", "[", "]"), new String[]{"abc", "cde"});
+    assertArrayEquals(SuperStr.between("[abc]f[cde]", "[", "]"), new String[]{"abc", "cde"});
 ```
 
-#### Java 8 Date Parsing and Formatting
+## collapseSpace
 
-It’s very common to format date into different formats and then parse a String to get the Date Time objects. 
+zip the n spaces into just 1 space
 
 ```java
-//Format examples
-LocalDate date = LocalDate.now();
-//default format
-System.out.println("Default format of LocalDate="+date);
-//specific format
-System.out.println(date.format(DateTimeFormatter.ofPattern("d::MMM::uuuu")));
-System.out.println(date.format(DateTimeFormatter.BASIC_ISO_DATE));
-
-
-LocalDateTime dateTime = LocalDateTime.now();
-//default format
-System.out.println("Default format of LocalDateTime="+dateTime);
-//specific format
-System.out.println(dateTime.format(DateTimeFormatter.ofPattern("d::MMM::uuuu HH::mm::ss")));
-System.out.println(dateTime.format(DateTimeFormatter.BASIC_ISO_DATE));
-
-Instant timestamp = Instant.now();
-//default format
-System.out.println("Default format of Instant="+timestamp);
-
-//Parse examples
-LocalDateTime dt = LocalDateTime.parse("15::六月::2016 21::39::48",
-        DateTimeFormatter.ofPattern("d::MMM::uuuu HH::mm::ss"));
-System.out.println("Default format after parsing = "+dt);
-
-///////output/////////
-
-Default format of LocalDate=2016-06-15
-15::六月::2016
-20160615
-Default format of LocalDateTime=2016-06-15T20:39:44.952
-15::六月::2016 20::39::44
-20160615
-Default format of Instant=2016-11-25T12:39:44.953Z
-Default format after parsing = 2016-06-15T21:39:48
+	assertEquals(SuperStr.collapseSpace("mark     ma"), "mark ma");
+    assertEquals(SuperStr.collapseSpace("    mark     ma   zhiyuan"), " mark ma zhiyuan");
 ```
 
-#### Java 8 Date API Legacy Date Time Support
-Legacy Date/Time classes are used in almost all the applications, so having backward compatibility is a must. That’s why there are several utility methods through which we can convert Legacy classes to new classes and vice versa. 
+## contains
 
 ```java
-//Date to Instant
-Instant timestamp = new Date().toInstant();
-//Now we can convert Instant to LocalDateTime or other similar classes
-LocalDateTime date = LocalDateTime.ofInstant(timestamp,
-        ZoneId.of(ZoneId.SHORT_IDS.get("PST")));
-System.out.println("Date = "+date);
-
-//Calendar to Instant
-Instant time = Calendar.getInstance().toInstant();
-System.out.println(time);
-//TimeZone to ZoneId
-ZoneId defaultZone = TimeZone.getDefault().toZoneId();
-System.out.println(defaultZone);
-
-//ZonedDateTime from specific Calendar
-ZonedDateTime gregorianCalendarDateTime = new GregorianCalendar().toZonedDateTime();
-System.out.println(gregorianCalendarDateTime);
-
-//Date API to Legacy classes
-Date dt = Date.from(Instant.now());
-System.out.println(dt);
-
-TimeZone tz = TimeZone.getTimeZone(defaultZone);
-System.out.println(tz);
-
-///////output/////////
-
-Date = 2016-06-15T04:41:27.995
-2016-06-15T12:41:28.171Z
-Asia/Shanghai
-2016-06-25T20:41:28.183+08:00[Asia/Shanghai]
-Fri Jun 15 20:41:28 CST 2016
-sun.util.calendar.ZoneInfo[id="Asia/Shanghai",offset=28800000,dstSavings=0,useDaylight=false,transitions=19,lastRule=null]
+	assertTrue(SuperStr.contains("mark", "m"));
+	assertFalse(SuperStr.contains("mark", "M"));  // case sensitive
+	assertTrue(SuperStr.contains("mark", "M", false)); // non case sensitive
 ```
 
-As you can see that legacy `TimeZone` class `toString()` methods are too verbose and not user friendly.
+## countStr
+
+```java
+ 	assertSame(SuperStr.countStr("maaaaaaaaaark", "Aa", false, false), 5); // non case sensitive and without allow overlapping
+    assertSame(SuperStr.countStr("maaaaaaaaaark", "Aa", false, true), 9); // non case sensitive and with allow overlapping
+```
+
+## isBlank
+
+String contains spaces only
+
+```java
+	assertFalse(SuperStr.isBlank(" a "));
+	assertTrue(SuperStr.isBlank(" "));
+	assertFalse(SuperStr.isBlank(""));
+	assertFalse(SuperStr.isBlank(null));
+```
 
 
-That’s all for Java 8 Date Time API, I like this new API a lot. 
-Some of the most used classes will be `LocalDate` and `LocalDateTime` for this new API. 
+## insert
 
+```java
+	assertEquals(SuperStr.insert("mk ma", "ar", 1), "mark ma");
+	assertEquals(SuperStr.insert("mk ma", "ar", 6), "mk ma"); // if index > value.length, return the value 
+```
 
-It’s very easy to work with and having similar methods that does a particular job makes it easy to find. 
-It will take some time from moving legacy classes to new Date Time classes, but I believe it will be worthy of the time.
+## left, mid and right Trim
+
+```java
+	//left
+	assertEquals(SuperStr.leftTrim("      mark"), "mark");
+	assertEquals(SuperStr.leftTrim("      mark    "), "mark    ");
+	assertEquals(SuperStr.leftTrim("      mar k"), "mar k");
+
+	//right
+	assertEquals(SuperStr.rightTrim("mark    "), "mark");
+	assertEquals(SuperStr.rightTrim("      mark    "), "      mark");
+	assertEquals(SuperStr.rightTrim("mar k      "), "mar k");
+
+	//mid
+	assertEquals(SuperStr.midTrim("mark    "), "mark    ");
+	assertEquals(SuperStr.midTrim("mar k      "), "mark      ");
+
+```
+## isNotBlank
+
+```java
+	assertTrue(SuperStr.isNotBlank("  a"));
+	assertFalse(SuperStr.isNotBlank("  "));
+	assertFalse(SuperStr.isNotBlank(null));
+	assertFalse(SuperStr.isNotBlank(""));
+```
+
+## trims
+
+remove all the non-blank String in an Array
+
+```java
+	assertArrayEquals(SuperStr.trims(new String[]{"ma", "rk", null, "", "  "}), new String[]{"ma", "rk"});
+```
+
+## reverse
+
+```java
+	assertEquals(SuperStr.reverse("mark"), "kram");
+```
+
+## removeNonWords
+
+```java
+	assertEquals(SuperStr.removeNonWords("ma^%$rk"), "mark");
+```
