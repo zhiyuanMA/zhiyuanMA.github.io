@@ -4,7 +4,7 @@ title:      The Usage of SuperStr
 categories: Java
 ---
 
-The **SuperStr** is a Java String Utils Library I release in Github. Easy, simple and clear to use.
+The **SuperStr** is a [Java String Utils Library](https://github.com/zhiyuanMA/SuperStr) I released in Github. Easy, simple and clear to use.
 
 
 ## slice
@@ -143,3 +143,6 @@ assertEquals(SuperStr.reverse("mark"), "kram");
 ```java
 assertEquals(SuperStr.removeNonWords("ma^%$rk"), "mark");
 ```
+
+
+There are some othe useful methods in the **SuperStr**, if you like, check out the [source code](https://github.com/zhiyuanMA/SuperStr) from Github now!
