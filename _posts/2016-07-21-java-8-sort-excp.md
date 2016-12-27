@@ -22,7 +22,8 @@ System.err: at java.util.TimSort.sort(TimSort.java:169)
 my code is simple, it's just a **Stream.sorted** method with lambda-expression statement:
 
 ```java
-stream().sorted((o1, o2) -> o1 > o2 ? 1 : -1).limit(count).forEach(s -> result.add(s.kw + "," + key + "," + s.rate));
+stream().sorted((o1, o2) -> o1 > o2 ? 1 : -1)
+	.limit(count).forEach(s -> result.add(s.kw + "," + key + "," + s.rate));
 ```
 
 The problem is the Sorted method, which changed the core algorithm after Java 7.
