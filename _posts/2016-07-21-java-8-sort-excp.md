@@ -1,10 +1,10 @@
 ---
 layout:     post
-title:      An Exception in Java 8 
+title:      An Exception in Java 8 Sort Method
 categories: Java
 ---
 
-Java 8 is amazing! So I transfer all my works to new version of Java, and persuade my workmates to do the same work. 
+Java 8 is amazing! So I transfer all my works to the new version of Java, and persuade my workmates to do the same work. 
 
 `But we received an exception when ran the test code, OMG`
 
