@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      The Usage of SuperStr
+title:      A Showcase of Spring Boot
 categories: Java
 ---
 
