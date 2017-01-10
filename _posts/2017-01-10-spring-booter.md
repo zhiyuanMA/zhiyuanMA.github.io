@@ -147,7 +147,9 @@ Now Spring Boot will use `Google Guava` to provide caching service.
 There are 3 annotations, `Cacheable`, `CachePut` and `CacheEvict`. 
 
 
-`Cacheable` for the simple select method, `CachePut` for the update or add method and `CacheEvict` for the delete method. All of them need a attribute `value` which indicate the `cache-names` in the `application.properties`, and attribute `key` for the keyword in the cache, I set the same keyword in my [code](https://github.com/zhiyuanMA/spring-booter/blob/master/src/main/java/me/zhiyuan/spring/booter/service/BooterServiceImpl.java) to make the caching work better.
+`Cacheable` for the simple select method, `CachePut` for the update or add method and `CacheEvict` for the delete method. 
+
+All of them need a attribute `value` which indicate the `cache-names` in the `application.properties`, and attribute `key` for the keyword in the cache, I set the same keyword in my [code](https://github.com/zhiyuanMA/spring-booter/blob/master/src/main/java/me/zhiyuan/spring/booter/service/BooterServiceImpl.java) to make the cache work better.
 
 
 You can check out the whole codes from [here](https://github.com/zhiyuanMA/spring-booter).
