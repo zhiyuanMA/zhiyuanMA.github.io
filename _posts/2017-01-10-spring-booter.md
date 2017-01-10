@@ -6,7 +6,6 @@ categories: Java
 
 Spring Boot makes it easy to create stand-alone, production-grade Spring based Applications. `spring-booter` is a showcase project of Spring Boot to be used as a quick starter for creating a **microservice** application.
 
-## About the spring-booter
 #### Customize SpringApplication using Builder
 
 I close the command line properties for the applicaiton since it's not safe for a released service in product environment.
@@ -126,7 +125,9 @@ After this, forward to the URL -- `http://localhost:8000/swagger-ui.html`
 
 #### Guava cache
 
-The cache abstraction does not provide an actual store and relies on abstraction materialized by the `org.springframework.cache.Cache` and `org.springframework.cache.CacheManager` interfaces. Spring Boot auto-configures a suitable `CacheManager` according to the implementation as long as the caching support is enabled via the `@EnableCaching` annotation. In general, we do not need to tell Spring Boot which `CacheManager` to use, just put the dependency in the `pom.xml`.
+The cache abstraction does not provide an actual store and relies on abstraction materialized by the `org.springframework.cache.Cache` and `org.springframework.cache.CacheManager` interfaces. 
+
+Spring Boot auto-configures a suitable `CacheManager` according to the implementation as long as the caching support is enabled via the `@EnableCaching` annotation. In general, we do not need to tell Spring Boot which `CacheManager` to use, just put the dependency in the `pom.xml`.
 
 ```java
 <dependency>
@@ -143,7 +144,10 @@ The cache abstraction does not provide an actual store and relies on abstraction
 Now Spring Boot will use `Google Guava` to provide caching service.
 
 
-There are 3 annotations, `Cacheable`, `CachePut` and `CacheEvict`. `Cacheable` for the simple select method, `CachePut` for the update or add method and `CacheEvict` for the delete method. All of them need a attribute `value` which indicate the `cache-names` in the `application.properties`, and attribute `key` for the keyword in the cache, I set the same keyword in my [code](https://github.com/zhiyuanMA/spring-booter/blob/master/src/main/java/me/zhiyuan/spring/booter/service/BooterServiceImpl.java) to make the caching work better.
+There are 3 annotations, `Cacheable`, `CachePut` and `CacheEvict`. 
+
+
+`Cacheable` for the simple select method, `CachePut` for the update or add method and `CacheEvict` for the delete method. All of them need a attribute `value` which indicate the `cache-names` in the `application.properties`, and attribute `key` for the keyword in the cache, I set the same keyword in my [code](https://github.com/zhiyuanMA/spring-booter/blob/master/src/main/java/me/zhiyuan/spring/booter/service/BooterServiceImpl.java) to make the caching work better.
 
 
 You can check out the whole codes from [here](https://github.com/zhiyuanMA/spring-booter).
