@@ -4,7 +4,7 @@ title:      The Usage of SuperStr
 categories: Java
 ---
 
-The **SuperStr** is a [Java String Utils Library](https://github.com/zhiyuanMA/SuperStr) I released in Github. Easy, simple and clear to use.
+The **SuperStr** is a [Java String Utils Library](https://github.com/zhiyuanMA/SuperStr) I released in Github. Easy, simple and clean to use.
 
 
 ## slice
