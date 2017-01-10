@@ -4,7 +4,7 @@ title:      The Stream in Java 8
 categories: Java
 ---
 
-When I first hear about the `Stream` API, I was confused about the name since it sounds similar to `InputStream` and `OutputStream` from Java I/O. But Java 8 streams are a completely different thing. Streams are playing a big part in **functional programming** to Java.
+When I first heard about the `Stream` API, I was confused about the name since it sounds similar to `InputStream` and `OutputStream` from Java I/O. But Java 8 streams are a completely different thing. Streams are playing a big part in **functional programming** to Java.
 
 ## How streams work
 
